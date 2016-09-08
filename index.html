@@ -1,0 +1,207 @@
+<!doctype html>
+<html ng-app="unpRecursion">
+<head>
+    <title>UnP - Recursion</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+</head>
+<body>
+<article>
+    <h1>Prime</h1>
+    <pre>
+        <code>
+            var prime = function(n, hn) {
+                if (hn === 0 || n === 1) {
+                    return true;
+                }
+                hn = hn || parseInt(n / 2);
+                if (n % hn === 0 && hn !== 1) {
+                    return false;
+                } else {
+                    return this.prime(n, hn - 1);
+                }
+            };
+            prime(<input type="number" id="prime" min="2" max="1000" value="2">);
+            > <span id="prime-output"></span>
+        </code>
+    </pre>
+</article>
+<article>
+    <h1>Fibonacci</h1>
+    <pre>
+        <code>
+            var fib = function(n) {
+                if(n <= 2) {
+                    return 1;
+                } else {
+                    return this.fib(n - 1) + this.fib(n - 2);
+                }
+            };
+            fib(<input type="number" id="fib" min="2" max="30" value="2">);
+            > <span id="fib-output"></span>
+        </code>
+    </pre>
+</article>
+<article>
+    <h1>Sum natual numbers lower</h1>
+    <pre>
+        <code>
+            var sum = function(n, s) {
+                if (n === 0) {
+                    return sum;
+                } else {
+                    return this.sum(n - 1, ~~sum + n);
+                }
+            };
+            sum(<input type="number" id="sum" min="2" max="1000" value="100">);
+            > <span id="sum-output"></span>
+        </code>
+    </pre>
+</article>
+
+<article>
+    <h1>Binary tree in order search</h1>
+    <pre>
+        <code>
+            var bTree = new binarySearchTree();
+
+            var inOrder = function (n, a){
+                a = a || [];
+                if(n){
+                    this.inOrder(n.left, a);
+                    a.push(n.value);
+                    this.inOrder(n.right, a);
+                }
+                return a;
+            };
+            bTree.push(<input type="number" id="btree" min="2" max="100">); //hit enter
+            inOrder(bTree.root);
+            > <span id="btree-output"></span>
+        </code>
+    </pre>
+</article>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script language="JavaScript" type="application/javascript">
+
+    var primeElement = document.getElementById('prime');
+    var primeEventListener = function() {
+        document.getElementById('prime-output').innerHTML = prime(this.value);
+    };
+    var prime = function(n, hn) {
+        if (hn === 0 || n === 1) {
+            return true;
+        }
+        hn = hn || parseInt(n / 2);
+        if (n % hn === 0 && hn !== 1) {
+            return false;
+        } else {
+            return this.prime(n, hn - 1);
+        }
+    };
+    primeElement.addEventListener('keyup', primeEventListener);
+    primeElement.addEventListener('change', primeEventListener);
+    primeEventListener.call(document.getElementById('prime'));
+
+    var fibElement = document.getElementById('fib');
+    var fibEventListener = function() {
+        document.getElementById('fib-output').innerHTML = fib(this.value);
+    };
+    var fib = function(n) {
+        if (n <= 2) {
+            return 1;
+        } else {
+            return this.fib(n - 1) + this.fib(n - 2);
+        }
+    };
+    fibElement.addEventListener('keyup', fibEventListener);
+    fibElement.addEventListener('change', fibEventListener);
+    fibEventListener.call(document.getElementById('fib'));
+
+    var sumElement = document.getElementById('sum');
+    var sumEventListener = function() {
+        document.getElementById('sum-output').innerHTML = sum(this.value);
+    };
+    var sum = function(n, s) {
+        if (n === 0) {
+            return s;
+        } else {
+            return this.sum(n - 1, ~~s + n);
+        }
+    };
+    sumElement.addEventListener('keyup', sumEventListener);
+    sumElement.addEventListener('change', sumEventListener);
+    sumEventListener.call(document.getElementById('sum'));
+
+
+    var btreeElement = document.getElementById('btree');
+    var btreeEventListener = function(e) {
+        if (e.keyCode === 13) {
+            bTree.push(this.value);
+            this.value = '';
+            document.getElementById('btree-output').innerHTML = inOrder(bTree.root);
+        }
+    };
+
+    btreeElement.addEventListener('keyup', btreeEventListener);
+
+    var node = function(val) {
+        this.value = val;
+        this.left = null;
+        this.right = null;
+    };
+
+    var binarySearchTree = function(){
+        this.root = null;
+    };
+
+    binarySearchTree.prototype.push = function(val){
+        var root = this.root;
+
+        if(!root){
+            this.root = new node(val);
+            return;
+        }
+
+        var currentNode = root;
+        var newNode = new node(val);
+
+        while(currentNode){
+            if(val < currentNode.value){
+                if(!currentNode.left){
+                    currentNode.left = newNode;
+                    break;
+                }
+                else{
+                    currentNode = currentNode.left;
+                }
+            }
+            else{
+                if(!currentNode.right){
+                    currentNode.right = newNode;
+                    break;
+                }
+                else{
+                    currentNode = currentNode.right;
+                }
+            }
+        }
+
+        return newNode;
+    };
+
+    var bTree = new binarySearchTree();
+
+    var inOrder = function (n, a){
+        a = a || [];
+        if(n){
+            this.inOrder(n.left, a);
+            a.push(n.value);
+            this.inOrder(n.right, a);
+        }
+        return a;
+    };
+
+    hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>
