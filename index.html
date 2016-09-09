@@ -82,11 +82,14 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
 <script language="JavaScript" type="application/javascript">
 
+    hljs.initHighlighting();
+
+
     var primeElement = document.getElementById('prime');
-    var primeEventListener = function() {
+    var primeEventListener = function () {
         document.getElementById('prime-output').innerHTML = prime(this.value);
     };
-    var prime = function(n, hn) {
+    var prime = function (n, hn) {
         if (hn === 0 || n === 1) {
             return true;
         }
@@ -94,7 +97,7 @@
         if (n % hn === 0 && hn !== 1) {
             return false;
         } else {
-            return this.prime(n, hn - 1);
+            return prime(n, hn - 1);
         }
     };
     primeElement.addEventListener('keyup', primeEventListener);
@@ -102,10 +105,10 @@
     primeEventListener.call(document.getElementById('prime'));
 
     var fibElement = document.getElementById('fib');
-    var fibEventListener = function() {
+    var fibEventListener = function () {
         document.getElementById('fib-output').innerHTML = fib(this.value);
     };
-    var fib = function(n) {
+    var fib = function (n) {
         if (n <= 2) {
             return 1;
         } else {
@@ -117,14 +120,14 @@
     fibEventListener.call(document.getElementById('fib'));
 
     var sumElement = document.getElementById('sum');
-    var sumEventListener = function() {
+    var sumEventListener = function () {
         document.getElementById('sum-output').innerHTML = sum(this.value);
     };
-    var sum = function(n, s) {
+    var sum = function (n, s) {
         if (n === 0) {
             return s;
         } else {
-            return this.sum(n - 1, ~~s + n);
+            return sum(n - 1, ~~s + n);
         }
     };
     sumElement.addEventListener('keyup', sumEventListener);
@@ -133,7 +136,7 @@
 
 
     var btreeElement = document.getElementById('btree');
-    var btreeEventListener = function(e) {
+    var btreeEventListener = function (e) {
         if (e.keyCode === 13) {
             bTree.push(this.value);
             this.value = '';
@@ -143,20 +146,20 @@
 
     btreeElement.addEventListener('keyup', btreeEventListener);
 
-    var node = function(val) {
+    var node = function (val) {
         this.value = val;
         this.left = null;
         this.right = null;
     };
 
-    var binarySearchTree = function(){
+    var binarySearchTree = function () {
         this.root = null;
     };
 
-    binarySearchTree.prototype.push = function(val){
+    binarySearchTree.prototype.push = function (val) {
         var root = this.root;
 
-        if(!root){
+        if (!root) {
             this.root = new node(val);
             return;
         }
@@ -164,22 +167,22 @@
         var currentNode = root;
         var newNode = new node(val);
 
-        while(currentNode){
-            if(val < currentNode.value){
-                if(!currentNode.left){
+        while (currentNode) {
+            if (val < currentNode.value) {
+                if (!currentNode.left) {
                     currentNode.left = newNode;
                     break;
                 }
-                else{
+                else {
                     currentNode = currentNode.left;
                 }
             }
-            else{
-                if(!currentNode.right){
+            else {
+                if (!currentNode.right) {
                     currentNode.right = newNode;
                     break;
                 }
-                else{
+                else {
                     currentNode = currentNode.right;
                 }
             }
@@ -190,17 +193,17 @@
 
     var bTree = new binarySearchTree();
 
-    var inOrder = function (n, a){
+    var inOrder = function (n, a) {
         a = a || [];
-        if(n){
-            this.inOrder(n.left, a);
+        if (n) {
+            inOrder(n.left, a);
             a.push(n.value);
-            this.inOrder(n.right, a);
+            inOrder(n.right, a);
         }
         return a;
     };
 
-    hljs.initHighlightingOnLoad();
+
 </script>
 
 </body>
