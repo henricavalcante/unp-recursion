@@ -158,6 +158,7 @@
 
     binarySearchTree.prototype.push = function (val) {
         var root = this.root;
+        val = ~~val;
 
         if (!root) {
             this.root = new node(val);
